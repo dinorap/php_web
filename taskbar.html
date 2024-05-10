@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copy Input Content</title>
+</head>
+
+<body>
+
+    <input type="text" id="inputField" value="Nội dung cần sao chép" style="width: 300px;">
+    <button onclick="copyInputContent()">Sao chép</button>
+
+    <script>
+        function copyInputContent() {
+            var inputField = document.getElementById("inputField");
+
+            // Chọn nội dung của input
+            inputField.select();
+
+            // Sao chép nội dung đã chọn vào clipboard
+            document.execCommand("copy");
+
+            // Bỏ chọn
+            window.getSelection().removeAllRanges();
+
+            // Thông báo khi sao chép thành công
+            alert("Đã sao chép nội dung: " + inputField.value);
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.33">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="shortcut icon" href="img/favicon.ico" />
+
+  <title>Thế giới điện thoại</title>
+
+  <!-- Load font awesome icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <!-- our files -->
+  <!-- css -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/topnav.css" />
+  <link rel="stylesheet" href="css/header.css" />
+  <link rel="stylesheet" href="css/taikhoan.css" />
+  <link rel="stylesheet" href="css/gioHang.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+  <!-- js -->
+  <script src="data/products.js"></script>
+  <script src="js/classes.js"></script>
+  <script src="js/dungchung.js"></script>
+  <script src="js/giohang.js"></script>
+  <style>
+
+  </style>
+</head>
+
+<body>
+  <script>
+    addTopNav();
+  </script>
+  <section style="min-height: 100vh">
+    <script>
+      addHeader();
+    </script>
+    <table class="listSanPham"></table>
+    <div id="checkoutModal">
+      <div class="infor_total" id="infor_total">
+        <button class="close-button" onclick="closeCheck()"><b>X</b></button>
+        <div class="infor0" id="infor0">
+          <div class="infor1">
+            <h2 id="modalLabel">Thông tin người mua</h2>
+          </div>
+          <hr>
+          <div class="infor2">
+            <form id="forminf">
+              <div class="form-group">
+                <label for="ho-ten">Họ và tên:</label><br>
+                <input type="text" placeholder="Họ" class="a" style="margin-right: 20px" id="ho">
+                <input type="text" placeholder="Tên" class="a" id="ten">
+                <div class="error-message"></div>
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email:</label><br>
+                <input type="email" placeholder="Email" id="email">
+                <div class="error-message"></div>
+              </div>
+
+              <div class="form-group">
+                <label for="so-dien-thoai">Số điện thoại:</label><br>
+                <input type="text" placeholder="Số điện thoại" id="sodienthoai">
+                <div class="error-message"></div>
+              </div>
+
+              <div class="form-group">
+                <label for="dia-chi">Địa chỉ:</label>
+                <div class="form-groupa">
+                  <select class="sele" id="city">
+                    <option disabled selected>--Chọn Tỉnh/Thành phố--</option>
+                  </select>
+                  <select class="sele" id="district">
+                    <option disabled selected>--Chọn Huyện/Quận--</option>
+                  </select>
+
+                  <select class="sele" id="ward">
+                    <option disabled selected>--Chọn Phường/Xã--</option>
+                  </select>
+                </div>
+                <div class=" error-message">
+                </div>
+                <input id="sonha" type="text" placeholder="Số nhà">
+                <div class="error-message"></div>
+              </div>
+              <div class="form-group">
+                <label>Lời nhắn</label>
+                <textarea rows="5" style="margin-top:10px;" id="hint"></textarea>
+              </div>
+
+              <div>
+                <p>Thông tin cá nhân của bạn sẽ được sử dụng để xử lý đơn hàng .Tăng trải nghiệm dịch vụ website và cho
+                  các mục đích được miêu tả trong chính sách của chúng tôi</p>
+              </div>
+            </form>
+          </div>
+
+        </div>
+        <div class="infor_end" id="infor_end"></div>
+      </div>
+    </div>
+
+  </section>
+  <script>
+
+    function getTextOfSelectedPaymentMethod() {
+      // Lấy tất cả các phần tử input radio có name là "paymentMethod"
+      var radioInputs = document.getElementsByName('paymentMethod');
+
+      // Duyệt qua tất cả các input radio để tìm input radio được chọn
+      for (var i = 0; i < radioInputs.length; i++) {
+        if (radioInputs[i].checked) {
+          // Nếu input radio được chọn, lấy giá trị của phần tử <b> trong <label>
+          var labelElement = radioInputs[i].closest('label');
+          var boldElement = labelElement.querySelector('b');
+
+          if (boldElement) {
+            return boldElement.textContent || boldElement.innerText;
+          }
+        }
+      }
+
+      // Nếu không có input radio nào được chọn, trả về null hoặc giá trị mặc định tùy vào yêu cầu của bạn
+      return null;
+    }
+
+    // Sử dụng hàm để lấy text của phần tử <b> tương ứng với radio được chọn
+    // Hiển thị text của phần tử <b> tương ứng
+
+    function showContent(paymentMethod) {
+      // Ẩn tất cả các nội dung trước khi hiển thị nội dung mới
+      document.getElementById("bankTransferContent").style.display = "none";
+      document.getElementById("cashOnDeliveryContent").style.display = "none";
+      document.getElementById("qrMomoContent").style.display = "none";
+      // Hiển thị nội dung cho lựa chọn được chọn
+      document.getElementById(paymentMethod + "Content").style.display = "block";
+    }
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+  <!-- End Section -->
+  <script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+      var citis = document.getElementById("city");
+      var districts = document.getElementById("district");
+      var wards = document.getElementById("ward");
+
+      // Function để lấy dữ liệu từ API
+
+      var Parameter = {
+        url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+        method: "GET",
+        responseType: "application/json",
+      };
+      var promise = axios(Parameter);
+      promise.then(function (result) {
+        renderCity(result.data);
+      });
+
+      function renderCity(data) {
+        for (const x of data) {
+          citis.options[citis.options.length] = new Option(x.Name, x.Id);
+        }
+        citis.onchange = function () {
+          district.length = 1;
+          ward.length = 1;
+          if (this.value != "") {
+            const result = data.filter(n => n.Id === this.value);
+
+            for (const k of result[0].Districts) {
+              district.options[district.options.length] = new Option(k.Name, k.Id);
+            }
+          }
+        };
+        district.onchange = function () {
+          ward.length = 1;
+          const dataCity = data.filter((n) => n.Id === citis.value);
+          if (this.value != "") {
+            const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
+
+            for (const w of dataWards) {
+              wards.options[wards.options.length] = new Option(w.Name, w.Id);
+            }
+          }
+        };
+      }
+
+
+    });
+
+    function thanhtoanqr() {
+      thanhToan();
+
+    }
+    addContainTaiKhoan();
+    function kiemTraThongTin() {
+      var isValid = true;
+      var hoInput = document.getElementById('ho');
+      var tenInput = document.getElementById('ten');
+      var emailInput = document.getElementById('email');
+      var soDienThoaiInput = document.getElementById('sodienthoai');
+      var tinhThanhPhoSelect = document.getElementById('city');
+      var huyenQuanSelect = document.getElementById('district');
+      var phuongXaSelect = document.getElementById('ward');
+      var sonhaInput = document.getElementById("sonha")
+      var errorMessages = document.querySelectorAll(".error-message");
+      var thanhToanSelect = document.getElementById('thanhtoan');
+      var magiamgia = document.getElementById('magiamgia')
+      // Xóa bất kỳ thông báo lỗi nào đã hiển thị trước đó
+      errorMessages.forEach(function (message) {
+        message.textContent = "";
+      });
+
+      // Kiểm tra từng trường thông tin và hiển thị thông báo lỗi nếu cần
+      // if (hoInput.value === "" || tenInput.value === "") {
+      //   errorMessages[0].textContent = "* Vui lòng nhập đầy đủ họ tên.";
+      //   isValid = false;
+      // }
+      // if (sonhaInput.value === "") {
+      //   errorMessages[4].textContent = "* Vui lòng nhập đầy đủ thông tin.";
+      //   isValid = false;
+      // }
+      // if (emailInput.value === "") {
+      //   errorMessages[1].textContent = "* Vui lòng nhập Email.";
+      //   isValid = false;
+      // } else {
+      //   // Sử dụng biểu thức chính quy để kiểm tra định dạng email
+      //   var emailPattern = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+      //   if (!emailPattern.test(emailInput.value)) {
+      //     errorMessages[1].textContent = "* Email không hợp lệ.";
+      //     isValid = false;
+      //   }
+      // }
+      // if (soDienThoaiInput.value === "") {
+      //   errorMessages[2].textContent = "* Vui lòng nhập số điện thoại.";
+      //   isValid = false;
+      // } else {
+      //   // Sử dụng biểu thức chính quy để kiểm tra định dạng số điện thoại
+      //   var phonePattern = /^[0-9]{10}$/; // Ví dụ: 10 chữ số
+      //   if (!phonePattern.test(soDienThoaiInput.value)) {
+      //     errorMessages[2].textContent = "Số điện thoại không hợp lệ định dạng 10 chữ số";
+      //     isValid = false;
+      //   }
+      // }
+      // if (tinhThanhPhoSelect.value === "--Chọn Tỉnh/Thành phố--" || huyenQuanSelect.value === '--Chọn Huyện/Quận--' || phuongXaSelect.value === '--Chọn Phường/Xã--') {
+      //   errorMessages[3].textContent = "* Vui lòng nhập đầy đủ địa chỉ.";
+      //   isValid = false;
+      // }
+      var paymentMethods = document.getElementsByName('paymentMethod');
+      var selectedMethod = false;
+      for (var i = 0; i < paymentMethods.length; i++) {
+        if (paymentMethods[i].checked) {
+          selectedMethod = true;
+          break;
+        }
+      }
+
+
+      if (!selectedMethod) {
+        alert('Vui lòng chọn một phương thức thanh toán trước khi đặt hàng.');
+        isValid = false;
+      } else {
+        if (isValid && document.querySelector('input[name="paymentMethod"][value="bankTransfer"]').checked) {
+          thanhToan();
+
+        }
+        if (isValid && document.querySelector('input[name="paymentMethod"][value="cashOnDelivery"]').checked) {
+          thanhToan();
+
+        }
+        // Hiển thị thông báo "Momo xin chào!" nếu chọn thanh toán bằng Momo
+        if (isValid && document.querySelector('input[name="paymentMethod"][value="qrMomo"]').checked) {
+          thanhToanqr(hoInput.value + tenInput.value, soDienThoaiInput.value)
+        }
+      }
+      // if (isValid && thanhToanSelect.value == "Thanh toán sau khi nhận hàng") {
+      //   // Nếu thông tin đã đủ và hợp lệ, thực hiện hành động thanh toán
+      //   thanhToan();
+      // }
+      // else if (isValid && thanhToanSelect.value == "Thanh toán Online") {
+      //   qrCode.style.display = "block";
+      //   infor0.style.display = "none"
+      // }
+      return isValid;
+    }
+  </script>
+  <!-- Các phần còn lại của mã HTML -->
+  </script>
+
+  <div class="footer">
+    <script>
+      addFooter();
+    </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js"></script>
+  </div>
+  <i class="fa fa-arrow-up" id="goto-top-page" onclick="gotoTop()"></i>
+</body>
+
+</html>

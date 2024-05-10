@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Hiển thị dữ liệu sản phẩm</title>
+</head>
+<body>
+    <h1>Danh sách sản phẩm</h1>
+    <ul id="productList"></ul>
+
+    <script>
+        // Lấy dữ liệu từ server
+        fetch('./data/luu.php')
+            .then(response => response.json())
+            .then(data => {
+                // Xử lý dữ liệu và hiển thị lên trang HTML
+                const productList = document.getElementById('productList');
+                data.forEach(product => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `Tên sản phẩm: ${product.name}, Giá: ${product.price}`;
+                    productList.appendChild(listItem);
+                });
+            })
+            .catch(error => console.error('Lỗi:', error));
+    </script>
+</body>
+</html>

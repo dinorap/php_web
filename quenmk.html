@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.33">
+  <title>Reset Password</title>
+  <!-- Import Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <script src="js/dungchung.js"></script>
+  <script src="data/products.js"></script>
+  <script src="js/classes.js"></script>
+  <script src="js/qmk.js"></script>
+  <link rel="stylesheet" href="css/qmk.css">
+  <style>
+  </style>
+</head>
+
+<body>
+  <script>
+    addqmk();
+  </script>
+  <!-- Import SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Import emailjs -->
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js"></script>
+</body>
+
+</html>

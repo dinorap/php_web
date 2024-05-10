@@ -1,0 +1,129 @@
+/* Top Navigation */
+	.top-nav {
+		display: inline-block;
+		background: #f1f1f1;
+		width: 100%;
+		border-bottom: 1px #e1e1e1 solid;
+	}
+
+	/* Social Icon */
+		.social-top-nav {
+			float: left;
+			display: table;
+		}
+		.social-top-nav a {
+			display: table-cell;
+			padding: 5px;
+			text-align: center;
+			font-size: 13px;
+			height: 2em;
+			width: 2em;
+			line-height: 2em;
+			color: gray;
+			background-color: #f1f1f1;
+			transition-duration: .2s;
+		}
+		/* hightlight icon fb, google, youtube .... when hover */
+		.social-top-nav a:hover { color: #fff; }
+		.fa-facebook:hover { background: #3B5998; }
+		.fa-twitter:hover { background: #55ACEE; }
+		.fa-google:hover { background: #dd4b39; }
+		.fa-youtube:hover { background: #bb0000; }
+	/* ======= End Social Icon ======= */
+
+	/* Quick link */
+		.top-nav-quicklink {
+			height: 37px;
+			float: right;
+		}
+		.top-nav-quicklink li {
+			display: inline-block;
+			font-size: 1em;
+			color: gray;
+			margin-bottom: 1px;
+		}
+		.top-nav-quicklink li a {
+			display: block;
+			color: gray;
+			padding: 8px 15px;
+			transition-duration: .15s;
+		}
+		.top-nav-quicklink li a:hover {
+			color: #000;
+			border-bottom: 4px solid rgb(1, 247, 255);
+		}
+		.top-nav-quicklink li a:hover i {
+			color: rgb(1, 247, 255);
+		}
+		.top-nav-quicklink li.active::after {
+			background-color:rgb(1, 247, 255);
+			content: "";
+			display: block;
+			height: 4px;
+			width: 100%; 
+		  }
+		  .top-nav-quicklink li.active:hover a {
+			border-bottom: none;  /* Tắt border bottom */
+		}
+		.github-link:hover {
+			background-color: black; /* Đổi màu nền khi lướt qua */
+			color: white; /* Đổi màu chữ khi lướt qua */
+		  }
+	/* ======= End quick link ======= */
+/* ======= End Top navigation ======= */
+.header__main {
+	background-color: rgb(255, 192, 203);
+	/* Màu nền của thanh taskbar */
+	background-image: linear-gradient(120deg, #8a5eff 0%, #ff66b2 50%, #8a5eff 100%);
+	/* Hình nền gradient */
+	background-size: cover;
+	/* Kích thước hình nền */
+	padding: 4px;
+	/* Khoảng cách giữa các phần tử bên trong thanh taskbar */
+}
+
+.header__main .main-menu {
+	list-style: none;
+	/* Loại bỏ dấu chấm trước mỗi mục */
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+.header__main .main-menu li {
+	display: inline-block;
+	/* Hiển thị các mục cạnh nhau */
+	margin-right: 20px;
+	/* Khoảng cách giữa các mục */
+}
+
+.header__main .main-menu li:last-child {
+	margin-right: 0;
+	/* Loại bỏ khoảng cách bên phải của mục cuối cùng */
+}
+
+.header__main .main-menu li a {
+	color: #ffffff;
+	/* Màu chữ */
+	text-decoration: none;
+	/* Loại bỏ gạch chân dưới chữ */
+	padding: 5px 10px;
+	/* Kích thước của mỗi mục */
+	transition: background-color 0.3s;
+	/* Hiệu ứng màu nền khi hover */
+	display: flex;
+	align-items: center;
+	/* Căn giữa hình ảnh và văn bản */
+}
+
+.header__main .main-menu li a:hover {
+	background-color: #555;
+	/* Màu nền khi di chuột qua */
+}
+
+.header__main .main-menu li a img {
+	height: 20px;
+	/* Đặt chiều cao của hình ảnh */
+	margin-right: 5px;
+	/* Khoảng cách giữa hình ảnh và văn bản */
+}
